@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- INDEX EDUCATION -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.index-education.com/rapprochementssoV2.0" targetNamespace="http://www.index-education.com/rapprochementssoV2.0" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:simpleType name="TypeIdentifiantPartenaire">
+		<xs:annotation>
+			<xs:documentation>Type représentant les identifiants uniques dans le référentiel du partenaire</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="preserve"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="IDENT">
+		<xs:restriction base="xs:unsignedInt"/>
+	</xs:simpleType>
+	<xs:element name="PARTENAIRE_INDEX">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Nomenclatures" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Civilites" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Civilite" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="Ident" type="tns:IDENT" use="required"/>
+												<xs:attribute name="Libelle" type="xs:string" use="required"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Etablissements">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Etablissement" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:attribute name="Ident" type="tns:IDENT" use="required"/>
+									<xs:attribute name="Numero" type="xs:string" use="required">
+										<xs:annotation>
+											<xs:documentation>Code RNE/UAI de l'établissement</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="Nom" type="xs:string" use="required"/>
+									<xs:attribute name="Adresse1" type="xs:string"/>
+									<xs:attribute name="Adresse2" type="xs:string"/>
+									<xs:attribute name="Adresse3" type="xs:string"/>
+									<xs:attribute name="Adresse4" type="xs:string"/>
+									<xs:attribute name="CodePostal" type="xs:string"/>
+									<xs:attribute name="Ville" type="xs:string"/>
+									<xs:attribute name="Pays" type="xs:string"/>
+									<xs:attribute name="TelSecretariat" type="xs:string"/>
+									<xs:attribute name="TelScolarite" type="xs:string"/>
+									<xs:attribute name="Fax" type="xs:string"/>
+									<xs:attribute name="EMail" type="xs:string"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="EtablissementsGeres">
+					<xs:annotation>
+						<xs:documentation>Permet d'importer la liste des établissements à initialiser dans la base EDT/PRONOTE</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Etablissement" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:attribute name="Ident" type="tns:IDENT" use="required"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Personnels" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Personnel" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:attribute name="Ident" type="tns:IDENT" use="required"/>
+									<xs:attribute name="Nom" type="xs:string" use="required"/>
+									<xs:attribute name="Prenom" type="xs:string" use="required"/>
+									<xs:attribute name="ID_Partenaire" type="tns:TypeIdentifiantPartenaire" use="required"/>
+									<xs:attribute name="Adresse1" type="xs:string"/>
+									<xs:attribute name="Adresse2" type="xs:string"/>
+									<xs:attribute name="Adresse3" type="xs:string"/>
+									<xs:attribute name="Adresse4" type="xs:string"/>
+									<xs:attribute name="CodePostal" type="xs:string"/>
+									<xs:attribute name="Ville" type="xs:string"/>
+									<xs:attribute name="Pays" type="xs:string"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Professeurs" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Professeur" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:attribute name="Ident" type="tns:IDENT" use="required"/>
+									<xs:attribute name="Nom" type="xs:string" use="required"/>
+									<xs:attribute name="Prenom" type="xs:string" use="required"/>
+									<xs:attribute name="DateNaissance" type="xs:date" use="optional"/>
+									<xs:attribute name="ID_Partenaire" type="tns:TypeIdentifiantPartenaire" use="required"/>
+									<xs:attribute name="Adresse1" type="xs:string"/>
+									<xs:attribute name="Adresse2" type="xs:string"/>
+									<xs:attribute name="Adresse3" type="xs:string"/>
+									<xs:attribute name="Adresse4" type="xs:string"/>
+									<xs:attribute name="CodePostal" type="xs:string"/>
+									<xs:attribute name="Ville" type="xs:string"/>
+									<xs:attribute name="Pays" type="xs:string"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Responsables" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Responsable" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Civilite" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Obligatoire pour l'export vers SIECLE des privés</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:attribute name="Ident" type="tns:IDENT" use="required"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="Ident" type="tns:IDENT" use="required"/>
+									<xs:attribute name="Nom" type="xs:string" use="required"/>
+									<xs:attribute name="Prenom" type="xs:string" use="required"/>
+									<xs:attribute name="ID_Partenaire" type="tns:TypeIdentifiantPartenaire" use="required"/>
+									<xs:attribute name="Adresse1" type="xs:string"/>
+									<xs:attribute name="Adresse2" type="xs:string"/>
+									<xs:attribute name="Adresse3" type="xs:string"/>
+									<xs:attribute name="Adresse4" type="xs:string"/>
+									<xs:attribute name="CodePostal" type="xs:string"/>
+									<xs:attribute name="Ville" type="xs:string"/>
+									<xs:attribute name="Pays" type="xs:string"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Eleves" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Eleve" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Responsable" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="Ident" type="tns:IDENT" use="required"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="Ident" type="tns:IDENT" use="required"/>
+									<xs:attribute name="Nom" type="xs:string" use="required"/>
+									<xs:attribute name="Prenom" type="xs:string" use="required"/>
+									<xs:attribute name="DateNaissance" type="xs:date" use="required"/>
+									<xs:attribute name="Sexe" use="optional">
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:enumeration value="Masculin"/>
+												<xs:enumeration value="Feminin"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="ID_Partenaire" type="tns:TypeIdentifiantPartenaire" use="required"/>
+									<xs:attribute name="NumeroNational" type="xs:string" use="optional">
+										<xs:annotation>
+											<xs:documentation>Correspond au champ ID_NATIONAL de l'export SCONET</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="Adresse1" type="xs:string"/>
+									<xs:attribute name="Adresse2" type="xs:string"/>
+									<xs:attribute name="Adresse3" type="xs:string"/>
+									<xs:attribute name="Adresse4" type="xs:string"/>
+									<xs:attribute name="CodePostal" type="xs:string"/>
+									<xs:attribute name="Ville" type="xs:string"/>
+									<xs:attribute name="Pays" type="xs:string"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="Date" type="xs:dateTime" use="required"/>
+			<xs:attribute name="Partenaire" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>ID du partenaire ayant généré ce fichier (fourni par Index-Education)</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="ProtocoleDelegationAuthentification" use="optional">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="CAS"/>
+						<xs:enumeration value="ADFS"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
