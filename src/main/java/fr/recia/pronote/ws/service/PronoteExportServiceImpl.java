@@ -32,6 +32,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.zip.Deflater;
 
@@ -218,7 +219,7 @@ public class PronoteExportServiceImpl implements PronoteExportService {
             System.arraycopy(iv, 0, cle, BYTE_SIZE, BYTE_SIZE);
 
             // generate de MD5 HASH of the (AES key + IV)
-            byte[] md5Hash = genMD5Hash(cle);
+            byte[] md5Hash = genMD5Hash(Arrays.copyOfRange(cle, 0, BYTE_SIZE * 2));
 
             // copy to the byte array the MD5 HASH
             System.arraycopy(md5Hash, 0, cle, BYTE_SIZE * 2, BYTE_SIZE);
