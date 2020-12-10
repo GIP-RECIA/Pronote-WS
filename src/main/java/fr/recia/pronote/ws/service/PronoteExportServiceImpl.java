@@ -223,14 +223,10 @@ public class PronoteExportServiceImpl implements PronoteExportService {
             // copy to the byte array the MD5 HASH
             System.arraycopy(md5Hash, 0, cle, BYTE_SIZE * 2, BYTE_SIZE);
 
-            // final key should have 2048 size for RSA encryption
-            byte[] finalKey = new byte[2048/8];
-            System.arraycopy(cle, 0, finalKey, 0, cle.length);
-
             // finally encrypt the byte array with the RSA asymmetric key
             Cipher cipherRsa = Cipher.getInstance("RSA/ECB/PKCS1Padding");
             cipherRsa.init(Cipher.ENCRYPT_MODE, publicKey);
-            encryptedKey = cipher.doFinal(finalKey);
+            encryptedKey = cipherRsa.doFinal(cle);
         } catch (NoSuchPaddingException | BadPaddingException | IllegalBlockSizeException | InvalidKeyException e) {
             throw new NoSuchAlgorithmException(e);
         }

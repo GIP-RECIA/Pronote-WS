@@ -77,10 +77,10 @@ public class PronoteAPIResource {
 		} catch (IOException e) {
 			log.error(String.format("Can't process ImportChiffre for %s", uai), e);
 		} catch (EmptyResultDataAccessException ex) {
-			log.error(String.format("Etablissement '%s' non trouvé", uai, ex));
+			log.error(String.format("Etablissement '%s' non trouvé", uai), ex);
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} catch (NoSuchAlgorithmException ex) {
-			log.error("Impossible de générer un Hash SHA-256 l'algorithme n'existe pas");
+			log.error("Impossible de générer le fichier un algorithme n'existe pas", ex);
 		} catch (SAXException ex) {
 			log.error("Le flux xml est mal formé", ex);
 		}
@@ -115,10 +115,10 @@ public class PronoteAPIResource {
 		} catch (IOException e) {
 			log.error(String.format("Can't process ImportChiffre for %s", uai), e);
 		} catch (EmptyResultDataAccessException ex) {
-			log.error(String.format("Etablissement '%s' non trouvé", uai, ex));
+			log.error(String.format("Etablissement '%s' non trouvé", uai), ex);
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} catch (NoSuchAlgorithmException ex) {
-			log.error("Impossible de générer un Hash SHA-256 l'algorithme n'existe pas");
+			log.error("Impossible de générer le fichier un algorithme n'existe pas", ex);
 		} catch (SAXException ex) {
 			log.error("Le flux xml est mal formé", ex);
 		}
