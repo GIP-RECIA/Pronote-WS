@@ -19,7 +19,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
@@ -34,7 +33,6 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.Base64;
-import java.util.zip.Deflater;
 
 import javax.annotation.PostConstruct;
 import javax.crypto.BadPaddingException;
@@ -61,6 +59,7 @@ import fr.recia.pronote.ws.service.bean.Civilite;
 import fr.recia.pronote.ws.service.bean.IIDMapper;
 import fr.recia.pronote.ws.service.bean.impl.IDMapperImpl;
 import fr.recia.pronote.ws.service.util.XmlValidatorImpl;
+import fr.recia.pronote.ws.service.util.Zlib;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -182,8 +181,10 @@ public class PronoteExportServiceImpl implements PronoteExportService {
         }
     }
 
-    private void encrypt(ImportChiffre importChiffre, final String content) throws NoSuchAlgorithmException, UnsupportedEncodingException {
-        byte[] input = compress(content);
+    private void encrypt(ImportChiffre importChiffre, final String content) throws NoSuchAlgorithmException, IOException {
+        byte[] input = Zlib.compress(content.getBytes(StandardCharsets.UTF_8));
+        log.debug("Compressed data stats: \n\rcontent length is {} \n\rreturned byte array length is {}",
+                content.length(), input.length);
 
         // Generating IV.
         byte[] iv = new byte[BYTE_SIZE];
@@ -235,22 +236,6 @@ public class PronoteExportServiceImpl implements PronoteExportService {
         importChiffre.setContenu(Base64.getEncoder().encodeToString(encrypted));
         importChiffre.setVerification(getHash(input));
         importChiffre.setCle(Base64.getEncoder().encodeToString(encryptedKey));
-    }
-
-    private byte[] compress(final String content) throws UnsupportedEncodingException {
-        // Encode a String into bytes
-        byte[] input = content.getBytes(StandardCharsets.UTF_8);
-
-        // Compress the bytes
-        byte[] buffer = new byte[input.length];
-        Deflater compresser = new Deflater();
-        compresser.setInput(input);
-        compresser.finish();
-        int compressedDataLength = compresser.deflate(buffer);
-        compresser.end();
-        log.debug("Compressed data, input length is '{}' and compressed length is '{}'", content.length(), compressedDataLength);
-
-        return buffer;
     }
 
     private byte[] getHash(final byte[] content) throws NoSuchAlgorithmException {
