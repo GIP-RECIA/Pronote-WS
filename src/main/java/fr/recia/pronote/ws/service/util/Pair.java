@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package fr.recia.mediacentre.ws.service.util;
+package fr.recia.pronote.ws.service.util;
 
 import lombok.Data;
 import lombok.NonNull;
