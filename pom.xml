@@ -9,7 +9,7 @@
 	</parent>
 	<groupId>fr.recia.pronote.ws</groupId>
 	<artifactId>esco-pronote-ws</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<packaging>war</packaging>
 	<name>esco-pronote-ws</name>
 	<description>Application REST Web-service permettant de transmettre un export utile à l'alimentation des identifiants ENT dans pronote</description>
@@ -34,7 +34,7 @@
 		<connection>scm:git:ssh://git@github.com/GIP-RECIA/Pronote-WS.git</connection>
 		<developerConnection>scm:git:ssh://git@github.com/GIP-RECIA/Pronote-WS.git</developerConnection>
 		<url>https://github.com/GIP-RECIA/Pronote-WS.git</url>
-		<tag>HEAD</tag>
+		<tag>0.0.1</tag>
 	</scm>
 
 	<dependencies>
