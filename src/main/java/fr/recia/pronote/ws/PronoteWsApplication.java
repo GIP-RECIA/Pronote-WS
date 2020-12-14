@@ -23,7 +23,9 @@ import java.util.stream.StreamSupport;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.AbstractEnvironment;
 import org.springframework.core.env.EnumerablePropertySource;
@@ -33,7 +35,12 @@ import org.springframework.core.env.MutablePropertySources;
 @SpringBootApplication
 @ConfigurationPropertiesScan
 @Slf4j
-public class PronoteWsApplication {
+public class PronoteWsApplication extends SpringBootServletInitializer {
+
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+		return application.sources(PronoteWsApplication.class);
+	}
 
 	public static void main(String[] args) {
 
