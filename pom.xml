@@ -105,10 +105,16 @@
 				<filtering>true</filtering>
 				<directory>src/main/resources</directory>
 				<includes>
+					<include>*.properties</include>
+				</includes>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>false</filtering>
+				<includes>
 					<include>logback*.xml</include>
 					<include>*.yml</include>
-					<include>*.properties</include>
-					<include>xsd/*.xsd</include>
+					<include>xsd/**</include>
 				</includes>
 			</resource>
 		</resources>

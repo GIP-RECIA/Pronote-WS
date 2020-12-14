@@ -71,7 +71,7 @@ public class PronoteAPIResource {
 
 	@RequestMapping(value = "/export/{uai}", method = RequestMethod.GET, produces = MediaType.APPLICATION_XML_VALUE)
 	public ResponseEntity<ImportChiffre> getXMLPronoteExport(@PathVariable String uai, HttpServletResponse response) {
-		log.debug("Requesting Import Chiffré Pronote of etablissement {}", uai);
+		log.info("Requesting Import Chiffré Pronote of etablissement {}", uai);
 		try {
 			return new ResponseEntity<ImportChiffre>(pronoteExportService.getPronoteExport(uai), HttpStatus.OK);
 		} catch (IOException e) {
@@ -89,7 +89,7 @@ public class PronoteAPIResource {
 
 	@RequestMapping(value = "/download/{uai}", method = RequestMethod.GET)
 	public ResponseEntity<byte[]> getFilePronoteExport(@PathVariable String uai, HttpServletResponse response) {
-		log.debug("Requesting Import Chiffré Pronote of etablissement {}", uai);
+		log.info("Requesting Import Chiffré Pronote of etablissement {}", uai);
 		try {
 			ImportChiffre ic = pronoteExportService.getPronoteExport(uai);
 

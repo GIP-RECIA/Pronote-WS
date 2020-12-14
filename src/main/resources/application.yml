@@ -16,8 +16,6 @@
 
 server:
   port: ${appPort:8080}
-  servlet:
-    context-path: /pronote-ws
 
 # Spring MVC actuator endpoints available via /admin/info, /admin/health, ...
 #server.servlet-path: /
@@ -29,9 +27,6 @@ management:
     enabled: false
 
 app:
-  info:
-    name: @project.artifactId@
-    version: @project.version@
   security:
     authorizedIPAccess:
       - 127.0.0.1
