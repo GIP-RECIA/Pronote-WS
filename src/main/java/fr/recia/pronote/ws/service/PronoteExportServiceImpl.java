@@ -33,6 +33,8 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.Base64;
+import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.crypto.BadPaddingException;
@@ -50,18 +52,24 @@ import com.fasterxml.jackson.module.jaxb.JaxbAnnotationModule;
 import fr.recia.pronote.ws.config.bean.AppIndexEducationProperties;
 import fr.recia.pronote.ws.dao.ILdapDao;
 import fr.recia.pronote.ws.model.conteneurimportchiffre.ImportChiffre;
+import fr.recia.pronote.ws.model.rapprochementsso.Eleves;
 import fr.recia.pronote.ws.model.rapprochementsso.Etablissement;
 import fr.recia.pronote.ws.model.rapprochementsso.Etablissements;
 import fr.recia.pronote.ws.model.rapprochementsso.EtablissementsGeres;
 import fr.recia.pronote.ws.model.rapprochementsso.Nomenclatures;
 import fr.recia.pronote.ws.model.rapprochementsso.PartenaireIndex;
+import fr.recia.pronote.ws.model.rapprochementsso.Personnels;
+import fr.recia.pronote.ws.model.rapprochementsso.Professeurs;
+import fr.recia.pronote.ws.model.rapprochementsso.Responsables;
 import fr.recia.pronote.ws.service.bean.Civilite;
 import fr.recia.pronote.ws.service.bean.IIDMapper;
 import fr.recia.pronote.ws.service.bean.impl.IDMapperImpl;
+import fr.recia.pronote.ws.service.util.Pair;
 import fr.recia.pronote.ws.service.util.XmlValidatorImpl;
 import fr.recia.pronote.ws.service.util.Zlib;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.xml.sax.SAXException;
 
@@ -85,6 +93,10 @@ public class PronoteExportServiceImpl implements PronoteExportService {
     private File debugDataPath;
 
     @Autowired
+    @Qualifier("regroupementStructures")
+    private Map<String, Set<String>> regroupementStructures;
+
+    @Autowired
     private File rapprochementSSOXSD;
 
     private Nomenclatures nomenclatures;
@@ -106,7 +118,11 @@ public class PronoteExportServiceImpl implements PronoteExportService {
         partenaireIndex.setProtocoleDelegationAuthentification(indexEducationProperties.getProtocol());
         partenaireIndex.setNomenclatures(nomenclatures);
 
-        setContentInfos(partenaireIndex, idEtablissement);
+        final Pair<String, Set<String>> regroupement = getRegroupementStructures(idEtablissement);
+        Set<String> idEtabs = regroupement.getValue();
+        log.debug("Chargement des données pour les structures {}", regroupement);
+
+        setContentInfos(partenaireIndex, idEtabs);
 
         // set XmlMapper to transform object to XML
         XmlMapper xmlMapper = new XmlMapper();
@@ -133,34 +149,53 @@ public class PronoteExportServiceImpl implements PronoteExportService {
         importChiffre.setPartenaire(indexEducationProperties.getPartenaireName());
         importChiffre.setDateExport(partenaireIndex.getDate());
         importChiffre.setDescription(indexEducationProperties.getDescription());
-        importChiffre.setUai(idEtablissement);
+        importChiffre.setUai(regroupement.getKey());
         importChiffre.setVersion(indexEducationProperties.getVersionConteneur());
         return importChiffre;
     }
 
-    private void setContentInfos(PartenaireIndex partenaireIndex, final String idEtablissement) {
+    private Pair<String, Set<String>> getRegroupementStructures(final String idEtablissement){
+        for (Map.Entry<String, Set<String>> entry : regroupementStructures.entrySet()) {
+            if (entry.getValue().contains(idEtablissement)) return new Pair<>(entry.getKey(), entry.getValue());
+        }
+        return new Pair<>(idEtablissement, Set.of(idEtablissement));
+    }
+
+    private void setContentInfos(PartenaireIndex partenaireIndex, final Set<String> idEtablissements) {
         IIDMapper userMapper = new IDMapperImpl();
         IIDMapper structMapper = new IDMapperImpl();
 
-        partenaireIndex.setEtablissements(getEtablissements(idEtablissement, structMapper));
+        partenaireIndex.setEtablissements(getEtablissements(idEtablissements, structMapper));
 
         EtablissementsGeres etablissementsGeres = new EtablissementsGeres();
-        etablissementsGeres.getEtablissements().add(
-                new EtablissementsGeres.Etablissement(
-                        partenaireIndex.getEtablissements().getEtablissements().get(0).getIdent()));
+        for(Etablissement etablissement: partenaireIndex.getEtablissements().getEtablissements()) {
+            etablissementsGeres.getEtablissements().add(
+                    new EtablissementsGeres.Etablissement(etablissement.getIdent()));
+        }
         partenaireIndex.setEtablissementsGeres(etablissementsGeres);
 
+        partenaireIndex.setProfesseurs(new Professeurs());
+        partenaireIndex.setPersonnels(new Personnels());
+        partenaireIndex.setResponsables(new Responsables());
+        partenaireIndex.setEleves(new Eleves());
 
-        partenaireIndex.setProfesseurs(ldapDao.findAllProfesseurs(idEtablissement, userMapper));
-        partenaireIndex.setPersonnels(ldapDao.findAllPersonnels(idEtablissement, userMapper));
-        partenaireIndex.setResponsables(ldapDao.finadAllResponsables(idEtablissement, userMapper));
-        partenaireIndex.setEleves(ldapDao.findAllEleves(idEtablissement, userMapper));
+        for (String idEtablissement: idEtablissements) {
+            log.debug("Recherche des données pour la structure {}", idEtablissement);
+            partenaireIndex.getProfesseurs().getProfesseurs().addAll(ldapDao.findAllProfesseurs(idEtablissement, userMapper));
+            partenaireIndex.getPersonnels().getPersonnels().addAll(ldapDao.findAllPersonnels(idEtablissement, userMapper));
+            partenaireIndex.getResponsables().getResponsables().addAll(ldapDao.finadAllResponsables(idEtablissement, userMapper));
+            partenaireIndex.getEleves().getEleves().addAll(ldapDao.findAllEleves(idEtablissement, userMapper));
+        }
+
+
     }
 
-    private Etablissements getEtablissements(final String idEtablissement, final IIDMapper structMapper) {
+    private Etablissements getEtablissements(final Set<String> idEtablissements, final IIDMapper structMapper) {
         Etablissements etablissements = new Etablissements();
-        Etablissement etab = ldapDao.findOneEtablissementById(idEtablissement, structMapper);
-        etablissements.getEtablissements().add(etab);
+        for(String idEtablissement: idEtablissements) {
+            Etablissement etab = ldapDao.findOneEtablissementById(idEtablissement, structMapper);
+            etablissements.getEtablissements().add(etab);
+        }
 
         return etablissements;
     }

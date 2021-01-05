@@ -22,7 +22,11 @@ import java.nio.file.Paths;
 import java.security.InvalidKeyException;
 import java.security.PublicKey;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import fr.recia.pronote.ws.config.bean.AppConfProperties;
 import fr.recia.pronote.ws.config.bean.AppIndexEducationProperties;
@@ -118,6 +122,17 @@ public class PronoteWSConfiguration {
         if (fs.isDirectory() && fs.canWrite()) return fs;
 
         throw new IllegalStateException("Le chemin spécifié pour générer les fichiers de débug n'est pas un répertoire autorisé en écriture.");
+    }
+
+    @Bean
+    public Map<String, Set<String>> regroupementStructures() {
+        Map<String, Set<String>> grouped = new HashMap<>();
+        appConfProperties.getStructuresRegroupees().forEach((key, values) -> {
+            Set<String> concatened = new HashSet<>(values);
+            concatened.add(key);
+            grouped.put(key, concatened);
+        });
+        return grouped;
     }
 
     @Bean

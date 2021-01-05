@@ -15,24 +15,26 @@
  */
 package fr.recia.pronote.ws.dao;
 
+import java.util.List;
+
 import javax.validation.constraints.NotBlank;
 
-import fr.recia.pronote.ws.model.rapprochementsso.Eleves;
+import fr.recia.pronote.ws.model.rapprochementsso.Eleve;
 import fr.recia.pronote.ws.model.rapprochementsso.Etablissement;
-import fr.recia.pronote.ws.model.rapprochementsso.Personnels;
-import fr.recia.pronote.ws.model.rapprochementsso.Professeurs;
-import fr.recia.pronote.ws.model.rapprochementsso.Responsables;
+import fr.recia.pronote.ws.model.rapprochementsso.Personnel;
+import fr.recia.pronote.ws.model.rapprochementsso.Professeur;
+import fr.recia.pronote.ws.model.rapprochementsso.Responsable;
 import fr.recia.pronote.ws.service.bean.IIDMapper;
 
 public interface ILdapDao {
 
-  Eleves findAllEleves(@NotBlank final String idEtablissement, final IIDMapper userMapper);
+  List<Eleve> findAllEleves(@NotBlank final String idEtablissement, final IIDMapper userMapper);
 
-  Personnels findAllPersonnels(@NotBlank final String idEtablissement, final IIDMapper userMapper);
+  List<Personnel> findAllPersonnels(@NotBlank final String idEtablissement, final IIDMapper userMapper);
 
-  Professeurs findAllProfesseurs(@NotBlank final String idEtablissement, final IIDMapper userMapper);
+  List<Professeur> findAllProfesseurs(@NotBlank final String idEtablissement, final IIDMapper userMapper);
 
-  Responsables finadAllResponsables(@NotBlank final String idEtablissement, final IIDMapper userMapper);
+  List<Responsable> finadAllResponsables(@NotBlank final String idEtablissement, final IIDMapper userMapper);
 
   Etablissement findOneEtablissementById(@NotBlank final String id, final IIDMapper structMapper);
 }

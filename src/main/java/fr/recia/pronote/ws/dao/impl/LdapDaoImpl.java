@@ -23,14 +23,10 @@ import javax.annotation.PostConstruct;
 import fr.recia.pronote.ws.config.bean.LDAPProperties;
 import fr.recia.pronote.ws.dao.ILdapDao;
 import fr.recia.pronote.ws.model.rapprochementsso.Eleve;
-import fr.recia.pronote.ws.model.rapprochementsso.Eleves;
 import fr.recia.pronote.ws.model.rapprochementsso.Etablissement;
 import fr.recia.pronote.ws.model.rapprochementsso.Personnel;
-import fr.recia.pronote.ws.model.rapprochementsso.Personnels;
 import fr.recia.pronote.ws.model.rapprochementsso.Professeur;
-import fr.recia.pronote.ws.model.rapprochementsso.Professeurs;
 import fr.recia.pronote.ws.model.rapprochementsso.Responsable;
-import fr.recia.pronote.ws.model.rapprochementsso.Responsables;
 import fr.recia.pronote.ws.service.bean.IExtractOpaqueId;
 import fr.recia.pronote.ws.service.bean.IExtractUIDFromDN;
 import fr.recia.pronote.ws.service.bean.IIDMapper;
@@ -78,7 +74,7 @@ public class LdapDaoImpl implements ILdapDao {
     }
 
     @Override
-    public Eleves findAllEleves(final String idEtablissement, IIDMapper userMapper) {
+    public List<Eleve> findAllEleves(final String idEtablissement, IIDMapper userMapper) {
         final Filter filter= new HardcodedFilter(String.format(ldapProperties.getFilters().getEleve(), idEtablissement));
         if (log.isDebugEnabled()) {
             log.debug("LDAP filter applied : " + filter);
@@ -88,13 +84,11 @@ public class LdapDaoImpl implements ILdapDao {
                 .attributes(LdapAttributes.PERSON_ATTRS.toArray(new String[LdapAttributes.PERSON_ATTRS.size()]))
                 .base(ldapProperties.getPeopleRootDn()).filter(filter);
 
-        Eleves eleves = new Eleves();
-        eleves.setEleves(ldapTemplate.search(query, mapper));
-        return eleves;
+        return ldapTemplate.search(query, mapper);
     }
 
     @Override
-    public Personnels findAllPersonnels(final String idEtablissement, IIDMapper userMapper) {
+    public List<Personnel> findAllPersonnels(final String idEtablissement, IIDMapper userMapper) {
         final Filter filter= new HardcodedFilter(String.format(ldapProperties.getFilters().getPersonnel(), idEtablissement));
         if (log.isDebugEnabled()) {
             log.debug("LDAP filter applied : " + filter);
@@ -104,13 +98,11 @@ public class LdapDaoImpl implements ILdapDao {
                 .attributes(LdapAttributes.PERSON_ATTRS.toArray(new String[LdapAttributes.PERSON_ATTRS.size()]))
                 .base(ldapProperties.getPeopleRootDn()).filter(filter);
 
-        Personnels personnels = new Personnels();
-        personnels.setPersonnels(ldapTemplate.search(query, mapper));
-        return personnels;
+        return ldapTemplate.search(query, mapper);
     }
 
     @Override
-    public Professeurs findAllProfesseurs(final String idEtablissement, IIDMapper userMapper) {
+    public List<Professeur> findAllProfesseurs(final String idEtablissement, IIDMapper userMapper) {
         final Filter filter= new HardcodedFilter(String.format(ldapProperties.getFilters().getProfesseur(), idEtablissement));
         if (log.isDebugEnabled()) {
             log.debug("LDAP filter applied : " + filter);
@@ -120,13 +112,11 @@ public class LdapDaoImpl implements ILdapDao {
                 .attributes(LdapAttributes.PERSON_ATTRS.toArray(new String[LdapAttributes.PERSON_ATTRS.size()]))
                 .base(ldapProperties.getPeopleRootDn()).filter(filter);
 
-        Professeurs professeurs = new Professeurs();
-        professeurs.setProfesseurs(ldapTemplate.search(query, mapper));
-        return professeurs;
+        return ldapTemplate.search(query, mapper);
     }
 
     @Override
-    public Responsables finadAllResponsables(final String idEtablissement, IIDMapper userMapper) {
+    public List<Responsable> finadAllResponsables(final String idEtablissement, IIDMapper userMapper) {
         final Filter filter= new HardcodedFilter(String.format(ldapProperties.getFilters().getResponsable(), idEtablissement));
         if (log.isDebugEnabled()) {
             log.debug("LDAP filter applied : " + filter);
@@ -136,9 +126,7 @@ public class LdapDaoImpl implements ILdapDao {
                 .attributes(LdapAttributes.PERSON_ATTRS.toArray(new String[LdapAttributes.PERSON_ATTRS.size()]))
                 .base(ldapProperties.getPeopleRootDn()).filter(filter);
 
-        Responsables responsables = new Responsables();
-        responsables.setResponsables(ldapTemplate.search(query, mapper));
-        return responsables;
+        return ldapTemplate.search(query, mapper);
     }
 
     @Override
@@ -152,8 +140,6 @@ public class LdapDaoImpl implements ILdapDao {
                 .attributes(LdapAttributes.STRUCTURE_ATTRS.toArray(new String[LdapAttributes.STRUCTURE_ATTRS.size()]))
                 .base(ldapProperties.getStructureRootDn()).filter(filter);
 
-        Etablissement etablissement = ldapTemplate.searchForObject(query, mapper);
-
-        return etablissement;
+        return ldapTemplate.searchForObject(query, mapper);
     }
 }
