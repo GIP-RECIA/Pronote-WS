@@ -128,9 +128,10 @@ public class PronoteWSConfiguration {
     public Map<String, Set<String>> regroupementStructures() {
         Map<String, Set<String>> grouped = new HashMap<>();
         appConfProperties.getStructuresRegroupees().forEach((key, values) -> {
+            values.replaceAll(String::toUpperCase);
             Set<String> concatened = new HashSet<>(values);
-            concatened.add(key);
-            grouped.put(key, concatened);
+            concatened.add(key.toUpperCase());
+            grouped.put(key.toUpperCase(), concatened);
         });
         return grouped;
     }

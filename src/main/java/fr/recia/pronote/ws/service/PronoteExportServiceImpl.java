@@ -156,9 +156,13 @@ public class PronoteExportServiceImpl implements PronoteExportService {
 
     private Pair<String, Set<String>> getRegroupementStructures(final String idEtablissement){
         for (Map.Entry<String, Set<String>> entry : regroupementStructures.entrySet()) {
-            if (entry.getValue().contains(idEtablissement)) return new Pair<>(entry.getKey(), entry.getValue());
+            if (containsIgnoreCase(entry.getValue(),idEtablissement)) return new Pair<>(entry.getKey(), entry.getValue());
         }
-        return new Pair<>(idEtablissement, Set.of(idEtablissement));
+        return new Pair<>(idEtablissement.toUpperCase(), Set.of(idEtablissement.toUpperCase()));
+    }
+
+    private boolean containsIgnoreCase(final Set<String> list, final String string) {
+        return list.stream().anyMatch(s -> s.equalsIgnoreCase(string));
     }
 
     private void setContentInfos(PartenaireIndex partenaireIndex, final Set<String> idEtablissements) {
