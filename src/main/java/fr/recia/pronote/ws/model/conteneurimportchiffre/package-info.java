@@ -20,8 +20,8 @@
 // Généré le : 2020.06.22 à 05:48:27 PM CEST 
 //
 
-@javax.xml.bind.annotation.XmlSchema(namespace = "http://www.index-education.com/containeurimportchiffreV1",
+@jakarta.xml.bind.annotation.XmlSchema(namespace = "http://www.index-education.com/containeurimportchiffreV1",
         elementFormDefault = XmlNsForm.QUALIFIED, attributeFormDefault = XmlNsForm.UNQUALIFIED)
 package fr.recia.pronote.ws.model.conteneurimportchiffre;
 
-import javax.xml.bind.annotation.XmlNsForm;
+import jakarta.xml.bind.annotation.XmlNsForm;

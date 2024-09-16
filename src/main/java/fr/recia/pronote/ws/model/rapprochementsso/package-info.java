@@ -20,5 +20,5 @@
 // Généré le : 2020.06.22 à 05:46:06 PM CEST 
 //
 
-@javax.xml.bind.annotation.XmlSchema(namespace = "http://www.index-education.com/rapprochementssoV2.0", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
+@jakarta.xml.bind.annotation.XmlSchema(namespace = "http://www.index-education.com/rapprochementssoV2.0", elementFormDefault = jakarta.xml.bind.annotation.XmlNsForm.QUALIFIED)
 package fr.recia.pronote.ws.model.rapprochementsso;

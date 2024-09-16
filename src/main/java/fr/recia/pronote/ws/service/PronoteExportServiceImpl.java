@@ -48,7 +48,7 @@ import javax.crypto.spec.IvParameterSpec;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.dataformat.xml.ser.ToXmlGenerator;
-import com.fasterxml.jackson.module.jaxb.JaxbAnnotationModule;
+import com.fasterxml.jackson.module.jakarta.xmlbind.JakartaXmlBindAnnotationModule;
 import fr.recia.pronote.ws.config.bean.AppIndexEducationProperties;
 import fr.recia.pronote.ws.dao.ILdapDao;
 import fr.recia.pronote.ws.model.conteneurimportchiffre.ImportChiffre;
@@ -126,7 +126,7 @@ public class PronoteExportServiceImpl implements PronoteExportService {
 
         // set XmlMapper to transform object to XML
         XmlMapper xmlMapper = new XmlMapper();
-        xmlMapper.registerModule(new JaxbAnnotationModule());
+        xmlMapper.registerModule(new JakartaXmlBindAnnotationModule());
         xmlMapper.configure(ToXmlGenerator.Feature.WRITE_XML_DECLARATION, true );
         xmlMapper.configure(SerializationFeature.INDENT_OUTPUT, true );
 

@@ -31,7 +31,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.dataformat.xml.ser.ToXmlGenerator;
-import com.fasterxml.jackson.module.jaxb.JaxbAnnotationModule;
+import com.fasterxml.jackson.module.jakarta.xmlbind.JakartaXmlBindAnnotationModule;
 import fr.recia.pronote.ws.model.conteneurimportchiffre.ImportChiffre;
 import fr.recia.pronote.ws.service.PronoteExportService;
 import fr.recia.pronote.ws.service.util.XmlValidatorImpl;
@@ -95,7 +95,7 @@ public class PronoteAPIResource {
 
 			// set XmlMapper to transform object to XML
 			XmlMapper xmlMapper = new XmlMapper();
-			xmlMapper.registerModule(new JaxbAnnotationModule());
+			xmlMapper.registerModule(new JakartaXmlBindAnnotationModule());
 			xmlMapper.configure(ToXmlGenerator.Feature.WRITE_XML_DECLARATION, true );
 
 			final String xmlContent = xmlMapper.writeValueAsString(ic);

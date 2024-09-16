@@ -23,7 +23,7 @@
 
 package fr.recia.pronote.ws.model.rapprochementsso;
 
-import javax.xml.bind.annotation.XmlRegistry;
+import jakarta.xml.bind.annotation.XmlRegistry;
 
 
 /**
