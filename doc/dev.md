@@ -13,3 +13,6 @@ ssh-keygen -i -f /PATH/ClePubIndexEducation.pub -m RFC4716> /PATH/ClePubIndexEdu
 
 # in production mainly set in system properties the property for log directory else it will log in $catalina_base
 -Dlogback.logfileDirectory=/PATH/
+
+# using local profile
+'./mvnw clean -Dspring.profiles.active=local -Dspring.config.import="./src/main/resources/application-local.yml" clean package'
