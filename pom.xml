@@ -155,19 +155,23 @@
       <plugin>
         <groupId>com.mycila</groupId>
         <artifactId>license-maven-plugin</artifactId>
-        <version>3.0</version>
+        <version>4.5</version>
         <configuration>
-          <header>etc/header.template</header>
-          <!--<licenseName>apache_v2</licenseName>-->
-          <includes>
-            <include>**/*.java</include>
-            <include>src/**/*.xml</include>
-            <include>**/*.properties</include>
-            <include>**/*.yml</include>
-            <!-- <include>**/*.jsp</include> -->
-            <!-- <include>**/*.txt</include> -->
-            <include>**/*.css</include>
-          </includes>
+          <licenseSets>
+            <licenseSet>
+              <header>etc/header.template</header>
+              <!--<licenseName>apache_v2</licenseName>-->
+              <includes>
+                <include>**/*.java</include>
+                <include>src/**/*.xml</include>
+                <include>**/*.properties</include>
+                <include>**/*.yml</include>
+                <!-- <include>**/*.jsp</include> -->
+                <!-- <include>**/*.txt</include> -->
+                <include>**/*.css</include>
+              </includes>
+            </licenseSet>
+          </licenseSets>
           <strictCheck>true</strictCheck>
         </configuration>
       </plugin>
