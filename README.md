@@ -1,2 +1,2 @@
-# Pronote-WS
-Application serveur REST produisant les flux XML d'alimentation de pronote
+# SI-ENT-API
+Application serveur REST fournissant des accès API sur les données du SI ENT

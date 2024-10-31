@@ -4,6 +4,9 @@ target/
 !**/src/main/**
 !**/src/test/**
 logs
+**/application-*.yml
+!**/application-ci.yml
+**.orig
 
 ### STS ###
 .apt_generated
