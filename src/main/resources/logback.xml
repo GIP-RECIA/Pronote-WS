@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright (C) 2020 GIP-RECIA https://www.recia.fr/
+    Copyright (C) 2020-2024 GIP-RECIA https://www.recia.fr/
     @Author (C) 2020 Julien Gribonvald <julien.gribonvald@recia.fr>
 
     Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,7 +17,7 @@
 
 -->
 <configuration scan="true" scanPeriod="30 seconds">
-    <contextName>pronote-ws</contextName>
+    <contextName>si-ent-api</contextName>
 
     <!-- | Expose the logback configuration via JMX + -->
     <jmxConfigurator />
