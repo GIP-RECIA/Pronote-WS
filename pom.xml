@@ -7,16 +7,17 @@
     <version>2.7.18</version>
     <relativePath /> <!-- lookup parent from repository -->
   </parent>
-  <groupId>fr.recia.pronote.ws</groupId>
-  <artifactId>esco-pronote-ws</artifactId>
-  <version>0.0.5-SNAPSHOT</version>
+  <groupId>fr.recia.api</groupId>
+  <artifactId>esco-si-ent-api</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
   <packaging>war</packaging>
-  <name>esco-pronote-ws</name>
-  <description>Application REST Web-service permettant de transmettre un export utile à l'alimentation des identifiants ENT dans pronote</description>
+  <name>esco-si-ent-api</name>
+  <description>API REST permettant de fournir des données issues du SI ENT, configurable par properties et accès sécurisés</description>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <java.version>11</java.version>
+    <license-maven-plugin.version>4.5</license-maven-plugin.version>
   </properties>
 
   <distributionManagement>
@@ -31,9 +32,9 @@
   </distributionManagement>
 
   <scm>
-    <connection>scm:git:ssh://git@github.com/GIP-RECIA/Pronote-WS.git</connection>
-    <developerConnection>scm:git:ssh://git@github.com/GIP-RECIA/Pronote-WS.git</developerConnection>
-    <url>https://github.com/GIP-RECIA/Pronote-WS.git</url>
+    <connection>scm:git:ssh://git@github.com/GIP-RECIA/SI-ENT-API.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com/GIP-RECIA/SI-ENT-API.git</developerConnection>
+    <url>https://github.com/GIP-RECIA/SI-ENT-API.git</url>
     <tag>HEAD</tag>
   </scm>
 
@@ -96,6 +97,11 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
+      <groupId>org.apache.tomcat.embed</groupId>
+      <artifactId>tomcat-embed-el</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
@@ -106,6 +112,7 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+
 
   <build>
     <resources>
@@ -155,8 +162,11 @@
       <plugin>
         <groupId>com.mycila</groupId>
         <artifactId>license-maven-plugin</artifactId>
-        <version>4.5</version>
+        <version>4.6</version>
         <configuration>
+          <properties>
+            <project.inceptionYear>2020</project.inceptionYear>
+          </properties>
           <licenseSets>
             <licenseSet>
               <header>etc/header.template</header>
@@ -174,11 +184,18 @@
           </licenseSets>
           <strictCheck>true</strictCheck>
         </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>com.mycila</groupId>
+            <artifactId>license-maven-plugin-git</artifactId>
+            <version>${license-maven-plugin.version}</version>
+          </dependency>
+        </dependencies>
       </plugin>
       <plugin>
         <groupId>org.jasig.maven</groupId>
-        <artifactId>maven-notice-plugin</artifactId>
-        <version>1.1.0</version>
+        <artifactId>notice-maven-plugin</artifactId>
+        <version>2.0.0</version>
         <configuration>
           <noticeTemplate>etc/NOTICE.template</noticeTemplate>
           <licenseMapping>
@@ -198,6 +215,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-war-plugin</artifactId>
+        <version>3.4.0</version>
         <configuration>
           <packagingExcludes>**/application-*.yml</packagingExcludes>
           <attachClasses>true</attachClasses>
@@ -206,6 +224,16 @@
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+          <jvmArguments>-Djava.rmi.server.hostname=localhost -Xdebug -Duser.timezone="Europe/Paris"
+            -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005 -Xms2G -Xmx3G</jvmArguments>
+          <excludes>
+            <exclude>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok</artifactId>
+            </exclude>
+          </excludes>
+        </configuration>
       </plugin>
     </plugins>
   </build>

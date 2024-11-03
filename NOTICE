@@ -17,23 +17,20 @@ under the License.
 
 This project includes:
   Apache Commons Codec under Apache License, Version 2.0
-  Apache HttpClient under Apache License, Version 2.0
-  Apache HttpCore under Apache License, Version 2.0
   Apache Log4j API under Apache License, Version 2.0
   Apache Log4j to SLF4J Adapter under Apache License, Version 2.0
+  asm under BSD-3-Clause
   ASM based accessors helper used by json-smart under The Apache Software License, Version 2.0
-  ASM Core under BSD
-  AspectJ weaver under Eclipse Public License - v 1.0
   AssertJ fluent assertions under Apache License, Version 2.0
   Byte Buddy (without dependencies) under Apache License, Version 2.0
   Byte Buddy agent under Apache License, Version 2.0
   ClassMate under Apache License, Version 2.0
-  esco-pronote-ws under Apache License, Version 2.0
+  esco-si-ent-api under Apache License, Version 2.0
   Hamcrest under BSD License 3
   Hibernate Validator Engine under Apache License 2.0
   Jackson datatype: jdk8 under The Apache Software License, Version 2.0
   Jackson datatype: JSR310 under The Apache Software License, Version 2.0
-  Jackson module: JAXB Annotations under The Apache Software License, Version 2.0
+  Jackson module: Jakarta XML Bind Annotations (jakarta.xml.bind) under The Apache Software License, Version 2.0
   Jackson-annotations under The Apache Software License, Version 2.0
   Jackson-core under The Apache Software License, Version 2.0
   jackson-databind under The Apache Software License, Version 2.0
@@ -42,8 +39,8 @@ This project includes:
   Jakarta Activation API jar under EDL 1.0
   Jakarta Annotations API under EPL 2.0 or GPL2 w/ CPE
   Jakarta Bean Validation API under Apache License 2.0
-  Jakarta Expression Language 3.0 under EPL 2.0 or GPL2 w/ CPE
   Jakarta XML Binding API under Eclipse Distribution License - v 1.0
+  Java Servlet API under CDDL + GPLv2 with classpath exception
   JBoss Logging 3 under Apache License, version 2.0
   JSON library from Android SDK under Apache License 2.0
   JSON Small and Fast Parser under The Apache Software License, Version 2.0
@@ -81,10 +78,7 @@ This project includes:
   Spring Web MVC under Apache License, Version 2.0
   spring-boot under Apache License, Version 2.0
   spring-boot-autoconfigure under Apache License, Version 2.0
-  spring-boot-configuration-processor under Apache License, Version 2.0
-  spring-boot-devtools under Apache License, Version 2.0
   spring-boot-starter under Apache License, Version 2.0
-  spring-boot-starter-aop under Apache License, Version 2.0
   spring-boot-starter-data-ldap under Apache License, Version 2.0
   spring-boot-starter-json under Apache License, Version 2.0
   spring-boot-starter-logging under Apache License, Version 2.0
@@ -95,12 +89,15 @@ This project includes:
   spring-boot-starter-web under Apache License, Version 2.0
   spring-boot-test under Apache License, Version 2.0
   spring-boot-test-autoconfigure under Apache License, Version 2.0
-  spring-ldap-core under The Apache Software License, Version 2.0
-  spring-security-config under The Apache Software License, Version 2.0
-  spring-security-core under The Apache Software License, Version 2.0
-  spring-security-web under The Apache Software License, Version 2.0
+  spring-ldap-core under Apache License, Version 2.0
+  spring-security-config under Apache License, Version 2.0
+  spring-security-core under Apache License, Version 2.0
+  spring-security-crypto under Apache License, Version 2.0
+  spring-security-test under Apache License, Version 2.0
+  spring-security-web under Apache License, Version 2.0
   Stax2 API under The BSD License
   tomcat-embed-core under Apache License, Version 2.0
+  tomcat-embed-el under Apache License, Version 2.0
   tomcat-embed-websocket under Apache License, Version 2.0
   Woodstox under The Apache License, Version 2.0
 
