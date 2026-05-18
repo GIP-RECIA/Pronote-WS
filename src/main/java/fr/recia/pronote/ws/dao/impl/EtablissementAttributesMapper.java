@@ -21,8 +21,8 @@ package fr.recia.pronote.ws.dao.impl;
 import java.util.List;
 
 import javax.naming.NamingException;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 import fr.recia.pronote.ws.model.rapprochementsso.Etablissement;
 import fr.recia.pronote.ws.model.rapprochementsso.ObjectFactory;

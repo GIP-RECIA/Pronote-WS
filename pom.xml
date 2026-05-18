@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.7.18</version>
+    <version>4.0.6</version>
     <relativePath /> <!-- lookup parent from repository -->
   </parent>
   <groupId>fr.recia.pronote.ws</groupId>
@@ -16,7 +16,7 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <java.version>11</java.version>
+    <java.version>25</java.version>
   </properties>
 
   <distributionManagement>
@@ -69,12 +69,8 @@
       <artifactId>commons-codec</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.fasterxml.jackson.dataformat</groupId>
+      <groupId>tools.jackson.dataformat</groupId>
       <artifactId>jackson-dataformat-xml</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.fasterxml.jackson.module</groupId>
-      <artifactId>jackson-module-jakarta-xmlbind-annotations</artifactId>
     </dependency>
     <dependency>
       <groupId>jakarta.xml.bind</groupId>
@@ -83,12 +79,8 @@
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
+      <version>1.18.38</version>
       <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>javax.servlet-api</artifactId>
-      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -127,13 +119,13 @@
       </resource>
     </resources>
     <testResources>
-<!--			<testResource>-->
-<!--				<directory>src/test/resources</directory>-->
-<!--				<filtering>false</filtering>-->
-<!--				<includes>-->
-<!--					<include>response-etabs.json</include>-->
-<!--				</includes>-->
-<!--			</testResource>-->
+      <!--			<testResource>-->
+      <!--				<directory>src/test/resources</directory>-->
+      <!--				<filtering>false</filtering>-->
+      <!--				<includes>-->
+      <!--					<include>response-etabs.json</include>-->
+      <!--				</includes>-->
+      <!--			</testResource>-->
       <testResource>
         <directory>src/test/resources</directory>
         <filtering>true</filtering>
@@ -152,6 +144,27 @@
       </testResource>
     </testResources>
     <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.13.0</version>
+
+        <configuration>
+          <release>25</release>
+
+          <annotationProcessorPaths>
+            <path>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok</artifactId>
+              <version>1.18.38</version>
+            </path>
+          </annotationProcessorPaths>
+
+          <compilerArgs>
+            <arg>-proc:full</arg>
+          </compilerArgs>
+        </configuration>
+      </plugin>
       <plugin>
         <groupId>com.mycila</groupId>
         <artifactId>license-maven-plugin</artifactId>
@@ -177,8 +190,8 @@
       </plugin>
       <plugin>
         <groupId>org.jasig.maven</groupId>
-        <artifactId>maven-notice-plugin</artifactId>
-        <version>1.1.0</version>
+        <artifactId>notice-maven-plugin</artifactId>
+        <version>2.0.0</version>
         <configuration>
           <noticeTemplate>etc/NOTICE.template</noticeTemplate>
           <licenseMapping>

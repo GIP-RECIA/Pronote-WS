@@ -18,9 +18,8 @@ package fr.recia.pronote.ws.web.rest;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.MediaType;
+import tools.jackson.databind.ObjectMapper;
 
 /**
  * Utility class for testing REST controllers.
@@ -48,7 +47,6 @@ public class TestUtil {
 	public static byte[] convertObjectToJsonBytes(Object object)
 			throws IOException {
 		ObjectMapper mapper = new ObjectMapper();
-		mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 		return mapper.writeValueAsBytes(object);
 	}
 
@@ -63,7 +61,6 @@ public class TestUtil {
 	public static Object convertJsonBytesToObject(byte[] jsonBytes,
 			Class<Object> objectType) throws IOException {
 		ObjectMapper mapper = new ObjectMapper();
-		mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 		return mapper.readValue(jsonBytes, objectType);
 	}
 }

@@ -27,18 +27,16 @@ import java.time.ZonedDateTime;
 
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlAttribute;
-import jakarta.xml.bind.annotation.XmlElement;
-import jakarta.xml.bind.annotation.XmlRootElement;
 import jakarta.xml.bind.annotation.XmlSchemaType;
 import jakarta.xml.bind.annotation.XmlType;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import fr.recia.pronote.ws.model.util.ZonedDateTimeAdapter;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import tools.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import tools.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
 
 /**
@@ -310,43 +308,33 @@ import lombok.NoArgsConstructor;
     "Responsables",
     "Eleves"
 })
-@XmlRootElement(name = "PARTENAIRE_INDEX", namespace = "http://www.index-education.com/rapprochementssoV2.0")
+@JacksonXmlRootElement(localName = "PARTENAIRE_INDEX", namespace = "http://www.index-education.com/rapprochementssoV2.0")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class PartenaireIndex {
 
-    @XmlElement(name = "Nomenclatures", namespace = "http://www.index-education.com/rapprochementssoV2.0")
-    @JacksonXmlProperty( localName = "Nomenclatures")
+    @JacksonXmlProperty( localName = "Nomenclatures", namespace = "http://www.index-education.com/rapprochementssoV2.0")
     protected Nomenclatures nomenclatures;
-    @XmlElement(name = "Etablissements", namespace = "http://www.index-education.com/rapprochementssoV2.0", required = true)
-    @JacksonXmlProperty( localName = "Etablissements")
+    @JacksonXmlProperty( localName = "Etablissements", namespace = "http://www.index-education.com/rapprochementssoV2.0")
     protected Etablissements etablissements;
-    @XmlElement(name = "EtablissementsGeres", namespace = "http://www.index-education.com/rapprochementssoV2.0", required = true)
-    @JacksonXmlProperty( localName = "EtablissementsGeres")
+    @JacksonXmlProperty( localName = "EtablissementsGeres", namespace = "http://www.index-education.com/rapprochementssoV2.0")
     protected EtablissementsGeres etablissementsGeres;
-    @XmlElement(name = "Personnels", namespace = "http://www.index-education.com/rapprochementssoV2.0")
-    @JacksonXmlProperty( localName = "Personnels")
+    @JacksonXmlProperty( localName = "Personnels", namespace = "http://www.index-education.com/rapprochementssoV2.0")
     protected Personnels personnels;
-    @XmlElement(name = "Professeurs", namespace = "http://www.index-education.com/rapprochementssoV2.0")
-    @JacksonXmlProperty( localName = "Professeurs")
+    @JacksonXmlProperty( localName = "Professeurs", namespace = "http://www.index-education.com/rapprochementssoV2.0")
     protected Professeurs professeurs;
-    @XmlElement(name = "Responsables", namespace = "http://www.index-education.com/rapprochementssoV2.0")
-    @JacksonXmlProperty( localName = "Responsables")
+    @JacksonXmlProperty( localName = "Responsables", namespace = "http://www.index-education.com/rapprochementssoV2.0")
     protected Responsables responsables;
-    @XmlElement(name = "Eleves", namespace = "http://www.index-education.com/rapprochementssoV2.0")
-    @JacksonXmlProperty( localName = "Eleves")
+    @JacksonXmlProperty( localName = "Eleves", namespace = "http://www.index-education.com/rapprochementssoV2.0")
     protected Eleves eleves;
-    @XmlAttribute(name = "Date", required = true)
+    @JacksonXmlProperty(localName = "Date", isAttribute = true)
     @XmlSchemaType(name = "dateTime")
     @XmlJavaTypeAdapter(ZonedDateTimeAdapter.class)
-    @JacksonXmlProperty( localName = "Date")
     protected ZonedDateTime date;
-    @XmlAttribute(name = "Partenaire", required = true)
-    @JacksonXmlProperty( localName = "Partenaire")
+    @JacksonXmlProperty( localName = "Partenaire", isAttribute = true)
     protected String partenaire;
-    @XmlAttribute(name = "ProtocoleDelegationAuthentification")
-    @JacksonXmlProperty( localName = "ProtocoleDelegationAuthentification")
+    @JacksonXmlProperty( localName = "ProtocoleDelegationAuthentification", isAttribute = true)
     protected String protocoleDelegationAuthentification;
 
 

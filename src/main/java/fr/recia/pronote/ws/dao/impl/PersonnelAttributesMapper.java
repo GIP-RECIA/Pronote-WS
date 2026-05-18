@@ -19,7 +19,7 @@
 package fr.recia.pronote.ws.dao.impl;
 
 import javax.naming.NamingException;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 import fr.recia.pronote.ws.model.rapprochementsso.Personnel;
 import fr.recia.pronote.ws.service.bean.IExtractOpaqueId;

@@ -31,3 +31,6 @@ app:
     authorizedIPAccess:
       - 127.0.0.1
 
+spring:
+  jackson:
+    default-property-inclusion: non_null

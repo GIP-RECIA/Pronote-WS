@@ -20,12 +20,9 @@ import java.util.List;
 
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlAttribute;
-import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlType;
 
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import tools.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;import tools.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import fr.recia.pronote.ws.service.bean.Sexe;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -89,43 +86,35 @@ import lombok.NoArgsConstructor;
 public class Eleve {
 
     @JacksonXmlElementWrapper(useWrapping = false)
-    @JacksonXmlProperty(localName = "Responsable")
-    @XmlElement(name = "Responsable", namespace = "http://www.index-education.com/rapprochementssoV2.0")
+    @JacksonXmlProperty(localName = "Responsable", namespace = "http://www.index-education.com/rapprochementssoV2.0")
     protected List<Responsable> responsable = new ArrayList<>();
-    @JacksonXmlProperty(localName = "Ident")
-    @XmlAttribute(name = "Ident", required = true)
+    @JacksonXmlProperty(localName = "Ident", isAttribute = true)
     protected long ident;
-    @JacksonXmlProperty(localName = "Nom")
-    @XmlAttribute(name = "Nom", required = true)
+    @JacksonXmlProperty(localName = "Nom", isAttribute = true)
     protected String nom;
-    @JacksonXmlProperty(localName = "Prenom")
-    @XmlAttribute(name = "Prenom", required = true)
+    @JacksonXmlProperty(localName = "Prenom", isAttribute = true)
     protected String prenom;
-    @JacksonXmlProperty(localName = "DateNaissance")
-    @XmlAttribute(name = "DateNaissance", required = true)
+    @JacksonXmlProperty(localName = "DateNaissance", isAttribute = true)
     protected String dateNaissance;
-    @JacksonXmlProperty(localName = "Sexe")
-    @XmlAttribute(name = "Sexe")
+    @JacksonXmlProperty(localName = "Sexe", isAttribute = true)
     protected Sexe sexe;
-    @JacksonXmlProperty(localName = "ID_Partenaire")
-    @XmlAttribute(name = "ID_Partenaire", required = true)
+    @JacksonXmlProperty(localName = "ID_Partenaire", isAttribute = true)
     protected String idPartenaire;
-    @JacksonXmlProperty(localName = "NumeroNational")
-    @XmlAttribute(name = "NumeroNational")
+    @JacksonXmlProperty(localName = "NumeroNational", isAttribute = true)
     protected String numeroNational;
-    @XmlAttribute(name = "Adresse1")
+    @JacksonXmlProperty(localName = "Adresse1", isAttribute = true)
     protected String adresse1;
-    @XmlAttribute(name = "Adresse2")
+    @JacksonXmlProperty(localName = "Adresse2", isAttribute = true)
     protected String adresse2;
-    @XmlAttribute(name = "Adresse3")
+    @JacksonXmlProperty(localName = "Adresse3", isAttribute = true)
     protected String adresse3;
-    @XmlAttribute(name = "Adresse4")
+    @JacksonXmlProperty(localName = "Adresse4", isAttribute = true)
     protected String adresse4;
-    @XmlAttribute(name = "CodePostal")
+    @JacksonXmlProperty(localName = "CodePostal", isAttribute = true)
     protected String codePostal;
-    @XmlAttribute(name = "Ville")
+    @JacksonXmlProperty(localName = "Ville", isAttribute = true)
     protected String ville;
-    @XmlAttribute(name = "Pays")
+    @JacksonXmlProperty(localName = "Pays", isAttribute = true)
     protected String pays;
 
     /**
@@ -152,7 +141,7 @@ public class Eleve {
     @XmlType(name = "")
     public static class Responsable {
 
-        @XmlAttribute(name = "Ident", required = true)
+        @JacksonXmlProperty(localName = "Ident", isAttribute = true)
         protected long ident;
 
     }

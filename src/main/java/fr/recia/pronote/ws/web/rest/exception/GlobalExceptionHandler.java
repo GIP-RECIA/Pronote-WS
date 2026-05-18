@@ -15,11 +15,9 @@
  */
 package fr.recia.pronote.ws.web.rest.exception;
 
-import java.io.IOException;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.recia.pronote.ws.model.erreur.Erreur;
 import fr.recia.pronote.ws.model.erreur.ErreurWrapper;
 import fr.recia.pronote.ws.service.exception.AuthorizedResourceException;
@@ -33,6 +31,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+import tools.jackson.databind.ObjectMapper;
 
 @ControllerAdvice
 @Slf4j
@@ -45,13 +44,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
 		ObjectMapper mapper = new ObjectMapper();
         ErreurWrapper erreurMsg;
-		try {
-			erreurMsg = mapper.readerFor(ErreurWrapper.class).readValue(e.getResponseBodyAsString());
-			log.info("Returning an error Object form the GAR : ", erreurMsg);
-		} catch (IOException ioe) {
-			log.info("The error wasn't returned by the GAR, so we construct the error from the HttpClientException !");
-			erreurMsg = new ErreurWrapper(new Erreur(Integer.toString(e.getStatusCode().value()), e.getStatusText(), null));
-		}
+		erreurMsg = mapper.readerFor(ErreurWrapper.class).readValue(e.getResponseBodyAsString());
+		log.info("Returning an error Object form the GAR : ", erreurMsg);
 		return new ResponseEntity<ErreurWrapper>(erreurMsg, e.getStatusCode());
 	}
 

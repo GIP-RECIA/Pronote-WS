@@ -16,10 +16,8 @@
 package fr.recia.pronote.ws.service;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import fr.recia.pronote.ws.model.conteneurimportchiffre.ImportChiffre;
 import org.xml.sax.SAXException;
 

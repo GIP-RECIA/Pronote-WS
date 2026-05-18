@@ -19,7 +19,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.naming.NamingException;
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 
 import fr.recia.pronote.ws.dao.impl.LdapAttributes;
 import fr.recia.pronote.ws.service.bean.IExtractOpaqueId;

@@ -17,31 +17,45 @@ package fr.recia.pronote.ws.config;
 
 import fr.recia.pronote.ws.config.bean.AppSecurityProperties;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.expression.WebExpressionAuthorizationManager;
 
 @Configuration
 @EnableWebSecurity
 @Slf4j
-public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfiguration {
 
-	@Autowired
-	private AppSecurityProperties securityProperties;
+	private final AppSecurityProperties securityProperties;
 
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		String hasIpAddress = "hasIpAddress('127.0.0.1') or hasIpAddress('::1')";
-		for (String ip: securityProperties.getAuthorizedIPAccess()) {
-			hasIpAddress += " or hasIpAddress('" + ip + "')";
+	public WebSecurityConfiguration(AppSecurityProperties securityProperties) {
+		this.securityProperties = securityProperties;
+	}
+
+	@Bean
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
+		StringBuilder hasIpAddress = new StringBuilder(
+				"hasIpAddress('127.0.0.1') or hasIpAddress('::1')"
+		);
+
+		for (String ip : securityProperties.getAuthorizedIPAccess()) {
+			hasIpAddress.append(" or hasIpAddress('").append(ip).append("')");
 		}
 
-		log.debug("WebSecurity configuration: autorize access on '/api/**' for {}", hasIpAddress);
+		log.debug("WebSecurity configuration: authorize access on '/**' for {}", hasIpAddress);
 
-		http.csrf().disable().exceptionHandling().and().authorizeRequests().antMatchers("/**").access(hasIpAddress)
-				.and().httpBasic().disable();
+		http
+				.csrf(AbstractHttpConfigurer::disable)
+				.authorizeHttpRequests(auth -> auth
+						.requestMatchers("/**")
+						.access(new WebExpressionAuthorizationManager(hasIpAddress.toString()))				)
+				.httpBasic(AbstractHttpConfigurer::disable);
 
+		return http.build();
 	}
 }

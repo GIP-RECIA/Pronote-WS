@@ -17,7 +17,7 @@ package fr.recia.pronote.ws.dao;
 
 import java.util.List;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 
 import fr.recia.pronote.ws.model.rapprochementsso.Eleve;
 import fr.recia.pronote.ws.model.rapprochementsso.Etablissement;

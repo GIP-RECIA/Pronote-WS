@@ -18,7 +18,7 @@ package fr.recia.pronote.ws.web.rest;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.head;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 
 import fr.recia.pronote.ws.web.rest.exception.GlobalExceptionHandler;
 import lombok.extern.slf4j.Slf4j;
