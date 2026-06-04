@@ -34,6 +34,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import jakarta.annotation.PostConstruct;
@@ -88,14 +89,14 @@ public class PronoteExportServiceImpl implements PronoteExportService {
     @Autowired
     private PublicKey publicKey;
 
-    @Autowired
+    @Autowired @Qualifier("debugDataFile")
     private File debugDataPath;
 
     @Autowired
     @Qualifier("regroupementStructures")
     private Map<String, Set<String>> regroupementStructures;
 
-    @Autowired
+    @Autowired @Qualifier("rapprochementSSOXSD")
     private File rapprochementSSOXSD;
 
     private Nomenclatures nomenclatures;
@@ -203,6 +204,11 @@ public class PronoteExportServiceImpl implements PronoteExportService {
     }
 
     private void logIntoFileXmlContent(final String xmlContent, final String idEtablissement){
+
+        if(Objects.isNull(debugDataPath)){
+            return;
+        }
+
         final String fileLog = String.format("/ResultPronoteUnencryptedFor-%s-%s.xml", idEtablissement,
                 Instant.now().truncatedTo(ChronoUnit.SECONDS).atZone(ZoneId.systemDefault())
                         .format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));

@@ -34,6 +34,7 @@ import fr.recia.pronote.ws.service.PronoteExportService;
 import fr.recia.pronote.ws.service.util.XmlValidatorImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -53,13 +54,13 @@ import tools.jackson.dataformat.xml.XmlWriteFeature;
 @Slf4j
 public class PronoteAPIResource {
 
-	@Autowired
+	@Autowired @Qualifier("debugDataFile")
 	private File debugDataPath;
 
 	@Autowired
 	private PronoteExportService pronoteExportService;
 
-	@Autowired
+	@Autowired @Qualifier("importChiffreXSD")
 	private File importChiffreXSD;
 
 	private XmlValidatorImpl xmlValidator;

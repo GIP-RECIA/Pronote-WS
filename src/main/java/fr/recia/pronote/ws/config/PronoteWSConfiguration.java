@@ -45,6 +45,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.ldap.core.LdapTemplate;
 import org.springframework.ldap.core.support.LdapContextSource;
 
@@ -119,14 +120,6 @@ public class PronoteWSConfiguration {
     }
 
     @Bean
-    public File debugDataPath() {
-        final File fs = Paths.get(appConfProperties.getDebugDataFilePath()).toFile();
-        if (fs.isDirectory() && fs.canWrite()) return fs;
-
-        throw new IllegalStateException("Le chemin spécifié pour générer les fichiers de débug n'est pas un répertoire autorisé en écriture.");
-    }
-
-    @Bean
     public Map<String, Set<String>> regroupementStructures() {
         Map<String, Set<String>> grouped = new HashMap<>();
         appConfProperties.getStructuresRegroupees().forEach((key, values) -> {
@@ -138,19 +131,28 @@ public class PronoteWSConfiguration {
         return grouped;
     }
 
-    @Bean
-    public File importChiffreXSD() throws IOException {
-        final File fs = new ClassPathResource("xsd/ConteneurImportChiffre.xsd").getFile();
-        if (fs.exists() && fs.isFile() && fs.canRead()) return fs;
-
-        throw new IllegalStateException("Le fichier xsd/RapprochementSSO.xsd n'a pas été trouvé.");
+    @Bean("debugDataFile")
+    public File debugDataPath() {
+        final File fs = Paths.get(appConfProperties.getDebugDataFilePath()).toFile();
+        if (fs.isDirectory() && fs.canWrite()) return fs;
+        throw new IllegalStateException("Le chemin spécifié pour générer les fichiers de débug n'est pas un répertoire autorisé en écriture.");
     }
 
-    @Bean
-    public File rapprochementSSOXSD() throws IOException {
-        final File fs = new ClassPathResource("xsd/RapprochementSSO.xsd").getFile();
-        if (fs.exists() && fs.isFile() && fs.canRead()) return fs;
+    @Bean("importChiffreXSD")
+    public File importChiffreXSD() throws IOException {
+        try {
+            return new ClassPathResource("xsd/ConteneurImportChiffre.xsd").getFile();
+        } catch (Exception e) {
+            throw new IllegalStateException("Le fichier xsd/ConteneurImportChiffre.xsd n'a pas été trouvé.");
+        }
+    }
 
-        throw new IllegalStateException("Le fichier xsd/RapprochementSSO.xsd n'a pas été trouvé.");
+    @Bean("rapprochementSSOXSD")
+    public File rapprochementSSOXSD() throws IOException {
+        try {
+            return new ClassPathResource("xsd/RapprochementSSO.xsd").getFile();
+        } catch (Exception e) {
+            throw new IllegalStateException("Le fichier xsd/RapprochementSSO.xsd n'a pas été trouvé.");
+        }
     }
 }
