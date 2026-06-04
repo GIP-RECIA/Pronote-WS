@@ -28,6 +28,7 @@ import javax.xml.validation.Validator;
 
 import lombok.extern.slf4j.Slf4j;
 import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 
 @Slf4j
 public class XmlValidatorImpl {
@@ -47,8 +48,16 @@ public class XmlValidatorImpl {
         try {
             validator.validate(xmlSource);
             return true;
+        } catch (SAXParseException e) {
+            log.error(
+                    "XML validation failed at line {}, column {}: {}",
+                    e.getLineNumber(),
+                    e.getColumnNumber(),
+                    e.getMessage()
+            );
+            throw e;
         } catch (SAXException | IOException e) {
-            log.error(xmlSource.getSystemId() + " is NOT valid reason:", e);
+            log.error("XML validation failed: {}", e.getMessage(), e);
             throw e;
         }
     }
