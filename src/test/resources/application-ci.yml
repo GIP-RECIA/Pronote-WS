@@ -1,0 +1,3 @@
+app:
+  conf:
+    debug-data-file-path: ${GITHUB_WORKSPACE}/tmp/
