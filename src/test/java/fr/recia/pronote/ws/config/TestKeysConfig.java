@@ -14,7 +14,7 @@ public class TestKeysConfig {
 
     @Bean
     @Primary
-    PublicKey publicKey() throws Exception {
+    PublicKey publicKeyTest() throws Exception {
         KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA");
         generator.initialize(2048);
 

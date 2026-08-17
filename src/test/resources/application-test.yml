@@ -64,7 +64,7 @@ app:
     user-uid-extractor-pattern: "^uid=(.*),ou=people,dc=esco-centre,dc=fr.*"
     autorized-responsable-pattern: "^uid=.*,ou=people,dc=esco-centre,dc=fr\\$.*\\$.*\\$([12]{1})\\$.*"
   conf:
-    debug-data-file-path: CHANGE IT
+    debug-data-file-path: /tmp/pronote-ws
     structures-regroupees:
       "placeholder":
         - placeholder
