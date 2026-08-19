@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 
 import fr.recia.pronote.ws.service.bean.IExtractUIDFromDN;
 import lombok.extern.slf4j.Slf4j;

@@ -17,12 +17,12 @@ package fr.recia.pronote.ws.model.rapprochementsso;
 
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlType;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import tools.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 /**
  * <p>Classe Java pour anonymous complex type.
@@ -49,9 +49,9 @@ import lombok.NoArgsConstructor;
 @XmlType(name = "")
 public class Civilite {
 
-    @XmlAttribute(name = "Ident", required = true)
+    @JacksonXmlProperty(localName = "Ident", isAttribute = true)
     protected long ident;
-    @XmlAttribute(name = "Libelle", required = true)
+    @JacksonXmlProperty(localName = "Libelle", isAttribute = true)
     protected String libelle;
 
 }

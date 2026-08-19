@@ -34,9 +34,10 @@ import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
@@ -45,10 +46,6 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-import com.fasterxml.jackson.dataformat.xml.ser.ToXmlGenerator;
-import com.fasterxml.jackson.module.jakarta.xmlbind.JakartaXmlBindAnnotationModule;
 import fr.recia.pronote.ws.config.bean.AppIndexEducationProperties;
 import fr.recia.pronote.ws.dao.ILdapDao;
 import fr.recia.pronote.ws.model.conteneurimportchiffre.ImportChiffre;
@@ -72,6 +69,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.xml.sax.SAXException;
+import tools.jackson.databind.SerializationFeature;
+import tools.jackson.dataformat.xml.XmlMapper;
+import tools.jackson.dataformat.xml.XmlWriteFeature;
 
 @Service
 @Slf4j
@@ -89,14 +89,14 @@ public class PronoteExportServiceImpl implements PronoteExportService {
     @Autowired
     private PublicKey publicKey;
 
-    @Autowired
+    @Autowired @Qualifier("debugDataFile")
     private File debugDataPath;
 
     @Autowired
     @Qualifier("regroupementStructures")
     private Map<String, Set<String>> regroupementStructures;
 
-    @Autowired
+    @Autowired @Qualifier("rapprochementSSOXSD")
     private File rapprochementSSOXSD;
 
     private Nomenclatures nomenclatures;
@@ -124,11 +124,10 @@ public class PronoteExportServiceImpl implements PronoteExportService {
 
         setContentInfos(partenaireIndex, idEtabs);
 
-        // set XmlMapper to transform object to XML
-        XmlMapper xmlMapper = new XmlMapper();
-        xmlMapper.registerModule(new JakartaXmlBindAnnotationModule());
-        xmlMapper.configure(ToXmlGenerator.Feature.WRITE_XML_DECLARATION, true );
-        xmlMapper.configure(SerializationFeature.INDENT_OUTPUT, true );
+        XmlMapper xmlMapper = XmlMapper.builder()
+                .enable(XmlWriteFeature.WRITE_XML_DECLARATION)
+                .enable(SerializationFeature.INDENT_OUTPUT)
+                .build();
 
         final String xmlContent = xmlMapper.writeValueAsString(partenaireIndex);
 
@@ -136,7 +135,7 @@ public class PronoteExportServiceImpl implements PronoteExportService {
         if (log.isDebugEnabled()) {
             logIntoFileXmlContent(xmlContent, idEtablissement);
         }
-        log.trace("Contenu en clair {}", xmlContent);
+        log.debug("Contenu en clair {}", xmlContent);
 
         // validating xml
         xmlValidator.validate(xmlContent);
@@ -205,6 +204,11 @@ public class PronoteExportServiceImpl implements PronoteExportService {
     }
 
     private void logIntoFileXmlContent(final String xmlContent, final String idEtablissement){
+
+        if(Objects.isNull(debugDataPath)){
+            return;
+        }
+
         final String fileLog = String.format("/ResultPronoteUnencryptedFor-%s-%s.xml", idEtablissement,
                 Instant.now().truncatedTo(ChronoUnit.SECONDS).atZone(ZoneId.systemDefault())
                         .format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));

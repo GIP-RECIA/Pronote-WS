@@ -1,0 +1,81 @@
+#
+# Copyright (C) 2020 GIP-RECIA https://www.recia.fr/
+# @Author (C) 2020 Julien Gribonvald <julien.gribonvald@recia.fr>
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#                 http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+server:
+  port: ${appPort:8080}
+
+# Spring MVC actuator endpoints available via /admin/info, /admin/health, ...
+#server.servlet-path: /
+#management.context-path: /admin
+
+# http://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#production-ready-endpoints
+management:
+  endpoints:
+    enabled: false
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+
+app:
+  security:
+    authorizedIPAccess:
+      - 127.0.0.1
+  ldap:
+    url: ldap://127.0.0.1:389/
+    base: dc=esco-centre,dc=fr
+    user-dn: cn=admin,ou=administrateurs,dc=esco-centre,dc=fr # login openldap
+    password: admin # login openldap
+    pooled: false
+    people-root-dn: ou=people
+    structure-root-dn: ou=structures
+    anonimous-read-only: false
+    count-limit: 6000
+    timeout: 15000
+    filters:
+      etablissement: (&(objectClass=ENTEtablissement)(ENTStructureUAI=%s))
+      eleve: (&(objectClass=ENTEleve)(ESCOUAI=%s)(!(ESCOPersonEtatCompte=DELETE))(ESCOPersonExternalIds=*))
+      responsable: (&(objectClass=ENTAuxPersRelEleve)(ESCOUAI=%s)(!(ESCOPersonEtatCompte=DELETE))(ESCOPersonExternalIds=*))
+      professeur: (&(objectClass=ENTAuxEnseignant)(ESCOUAI=%s)(ESCOPersonExternalIds=*))
+      personnel: (&(|(objectClass=ENTAuxNonEnsEtab)(objectClass=ENTAuxNonEnsServAc)(objectClass=ENTAuxNonEnsCollLoc))(ESCOUAI=%s)(!(ESCOPersonProfils=INS))(ESCOPersonExternalIds=*))
+    etablissement-name-processors:
+      - group-regex: "[^-]*(-).*(-ac-ORL._TOURS)"
+        index-list-replacement:
+          "1": " "
+          "2": ""
+      - group-regex: "^.*(\\$).*(\\$).*"
+        index-list-replacement:
+          "1": " "
+          "2": " "
+    user-opaque-id-pattern: "^PRONOTE\\$(.*)"
+    user-uid-extractor-pattern: "^uid=(.*),ou=people,dc=esco-centre,dc=fr.*"
+    autorized-responsable-pattern: "^uid=.*,ou=people,dc=esco-centre,dc=fr\\$.*\\$.*\\$([12]{1})\\$.*"
+  conf:
+    debug-data-file-path: /tmp/pronote-ws
+    structures-regroupees:
+      "placeholder":
+        - placeholder
+  index-education-params:
+    partenaire-name: PartenaireName
+    partenaire-id: PartenaireId
+    description: Description
+    version-conteneur: 2.0
+    public-key-path: some/path/Cle.id_rsa.pub
+
+
+test:
+  use-localhost-ldap: true #set to true for local tests, but stay at false in commits for CI
+  uai: "0290009C"

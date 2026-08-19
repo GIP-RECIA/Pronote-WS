@@ -17,7 +17,7 @@ package fr.recia.pronote.ws.config.bean;
 
 import java.util.List;
 
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;

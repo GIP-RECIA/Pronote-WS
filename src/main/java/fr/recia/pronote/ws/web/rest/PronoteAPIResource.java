@@ -26,17 +26,15 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
-import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.annotation.PostConstruct;
+import jakarta.servlet.http.HttpServletResponse;
 
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-import com.fasterxml.jackson.dataformat.xml.ser.ToXmlGenerator;
-import com.fasterxml.jackson.module.jakarta.xmlbind.JakartaXmlBindAnnotationModule;
 import fr.recia.pronote.ws.model.conteneurimportchiffre.ImportChiffre;
 import fr.recia.pronote.ws.service.PronoteExportService;
 import fr.recia.pronote.ws.service.util.XmlValidatorImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -47,19 +45,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.xml.sax.SAXException;
+import tools.jackson.databind.SerializationFeature;
+import tools.jackson.dataformat.xml.XmlMapper;
+import tools.jackson.dataformat.xml.XmlWriteFeature;
 
 @RestController
 @RequestMapping(value = "/api")
 @Slf4j
 public class PronoteAPIResource {
 
-	@Autowired
+	@Autowired @Qualifier("debugDataFile")
 	private File debugDataPath;
 
 	@Autowired
 	private PronoteExportService pronoteExportService;
 
-	@Autowired
+	@Autowired @Qualifier("importChiffreXSD")
 	private File importChiffreXSD;
 
 	private XmlValidatorImpl xmlValidator;
@@ -94,9 +95,14 @@ public class PronoteAPIResource {
 			ImportChiffre ic = pronoteExportService.getPronoteExport(uai);
 
 			// set XmlMapper to transform object to XML
-			XmlMapper xmlMapper = new XmlMapper();
-			xmlMapper.registerModule(new JakartaXmlBindAnnotationModule());
-			xmlMapper.configure(ToXmlGenerator.Feature.WRITE_XML_DECLARATION, true );
+//			XmlMapper xmlMapper = new XmlMapper();
+//			xmlMapper.registerModule(new JakartaXmlBindAnnotationModule());
+//			xmlMapper.configure(ToXmlGenerator.Feature.WRITE_XML_DECLARATION, true );
+
+			XmlMapper xmlMapper = XmlMapper.builder()
+					.enable(XmlWriteFeature.WRITE_XML_DECLARATION)
+					.enable(SerializationFeature.INDENT_OUTPUT)
+					.build();
 
 			final String xmlContent = xmlMapper.writeValueAsString(ic);
 

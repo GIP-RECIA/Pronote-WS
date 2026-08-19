@@ -18,38 +18,30 @@ package fr.recia.pronote.ws.web.rest;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.head;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import javax.annotation.PostConstruct;
+import fr.recia.pronote.ws.config.TestKeysConfig;
+import jakarta.annotation.PostConstruct;
 
 import fr.recia.pronote.ws.web.rest.exception.GlobalExceptionHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 @ExtendWith(SpringExtension.class)
-@ActiveProfiles(value = "test")
 @Slf4j
+@Import(TestKeysConfig.class)
 @SpringBootTest
+@AutoConfigureMockMvc
 public class HealthCheckTest {
 
+    @Autowired
     private MockMvc mockHealthCheckMvc;
-
-    @PostConstruct
-    public void setup() {
-        MockitoAnnotations.initMocks(this);
-
-        HealthCheck healthCheck = new HealthCheck();
-
-        this.mockHealthCheckMvc = MockMvcBuilders.standaloneSetup(healthCheck)
-                .setControllerAdvice(new GlobalExceptionHandler())
-                .build();
-    }
 
     @Test
     public void testHealthCheck() throws Exception {

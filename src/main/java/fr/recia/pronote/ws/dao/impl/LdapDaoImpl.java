@@ -18,7 +18,7 @@ package fr.recia.pronote.ws.dao.impl;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 
 import fr.recia.pronote.ws.config.bean.LDAPProperties;
 import fr.recia.pronote.ws.dao.ILdapDao;

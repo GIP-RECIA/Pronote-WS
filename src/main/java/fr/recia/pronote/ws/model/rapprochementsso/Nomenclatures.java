@@ -17,11 +17,9 @@ package fr.recia.pronote.ws.model.rapprochementsso;
 
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlType;
 
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import tools.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;import tools.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -74,8 +72,7 @@ import lombok.NoArgsConstructor;
 public class Nomenclatures {
 
     @JacksonXmlElementWrapper(useWrapping = false)
-    @JacksonXmlProperty(localName = "Civilites")
-    @XmlElement(name = "Civilites", namespace = "http://www.index-education.com/rapprochementssoV2.0")
+    @JacksonXmlProperty(localName = "Civilites", namespace = "http://www.index-education.com/rapprochementssoV2.0")
     protected Civilites civilites;
 
 }

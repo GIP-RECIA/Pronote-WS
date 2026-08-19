@@ -28,18 +28,16 @@ import java.time.ZonedDateTime;
 
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlAttribute;
-import jakarta.xml.bind.annotation.XmlElement;
-import jakarta.xml.bind.annotation.XmlRootElement;
 import jakarta.xml.bind.annotation.XmlSchemaType;
 import jakarta.xml.bind.annotation.XmlType;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import tools.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import fr.recia.pronote.ws.model.util.ZonedDateTimeAdapter;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import tools.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
 
 /**
@@ -85,37 +83,29 @@ import lombok.NoArgsConstructor;
     "DateExport",
     "UAI"
 })
-@XmlRootElement(name = "ImportChiffre", namespace = "http://www.index-education.com/containeurimportchiffreV1")
+@JacksonXmlRootElement(localName = "ImportChiffre", namespace = "http://www.index-education.com/containeurimportchiffreV1")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class ImportChiffre implements Serializable{
 
-    @JacksonXmlProperty(localName = "Partenaire")
-    @XmlElement(name = "Partenaire", namespace = "http://www.index-education.com/containeurimportchiffreV1", required = true)
+    @JacksonXmlProperty(localName = "Partenaire", namespace = "http://www.index-education.com/containeurimportchiffreV1")
     protected String partenaire;
-    @JacksonXmlProperty(localName = "Description")
-    @XmlElement(name = "Description", namespace = "http://www.index-education.com/containeurimportchiffreV1", required = true)
+    @JacksonXmlProperty(localName = "Description", namespace = "http://www.index-education.com/containeurimportchiffreV1")
     protected String description;
-    @JacksonXmlProperty(localName = "Cle")
-    @XmlElement(name = "Cle", namespace = "http://www.index-education.com/containeurimportchiffreV1", required = true)
+    @JacksonXmlProperty(localName = "Cle", namespace = "http://www.index-education.com/containeurimportchiffreV1")
     protected String cle;
-    @JacksonXmlProperty(localName = "Contenu")
-    @XmlElement(name = "Contenu", namespace = "http://www.index-education.com/containeurimportchiffreV1", required = true)
+    @JacksonXmlProperty(localName = "Contenu", namespace = "http://www.index-education.com/containeurimportchiffreV1")
     protected String contenu;
-    @JacksonXmlProperty(localName = "Verification")
-    @XmlElement(name = "Verification", namespace = "http://www.index-education.com/containeurimportchiffreV1", required = true)
+    @JacksonXmlProperty(localName = "Verification", namespace = "http://www.index-education.com/containeurimportchiffreV1")
     protected byte[] verification;
-    @JacksonXmlProperty(localName = "DateExport")
-    @XmlElement(name = "DateExport", namespace = "http://www.index-education.com/containeurimportchiffreV1", required = true)
+    @JacksonXmlProperty(localName = "DateExport", namespace = "http://www.index-education.com/containeurimportchiffreV1")
     @XmlSchemaType(name = "dateTime")
     @XmlJavaTypeAdapter(ZonedDateTimeAdapter.class)
     protected ZonedDateTime dateExport;
-    @JacksonXmlProperty(localName = "UAI")
-    @XmlElement(name = "UAI", namespace = "http://www.index-education.com/containeurimportchiffreV1", required = true)
+    @JacksonXmlProperty(localName = "UAI", namespace = "http://www.index-education.com/containeurimportchiffreV1")
     protected String uai;
-    @JacksonXmlProperty(localName = "Version")
-    @XmlAttribute(name = "Version", required = true)
+    @JacksonXmlProperty(localName = "Version", isAttribute = true)
     protected String version;
 
 

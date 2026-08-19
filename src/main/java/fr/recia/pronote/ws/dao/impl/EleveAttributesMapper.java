@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import javax.naming.NamingException;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 import fr.recia.pronote.ws.model.rapprochementsso.Eleve;
 import fr.recia.pronote.ws.service.bean.IExtractOpaqueId;

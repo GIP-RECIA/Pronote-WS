@@ -17,8 +17,8 @@ package fr.recia.pronote.ws.config.bean;
 
 import java.util.Map;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 
 import lombok.Data;
 import org.springframework.validation.annotation.Validated;

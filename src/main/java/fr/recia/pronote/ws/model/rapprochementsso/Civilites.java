@@ -20,13 +20,12 @@ import java.util.List;
 
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlType;
 
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
-import lombok.AllArgsConstructor;
+import tools.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import tools.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 /**
  * <p>Classe Java pour anonymous complex type.
@@ -66,7 +65,7 @@ import lombok.NoArgsConstructor;
 public class Civilites {
 
     @JacksonXmlElementWrapper(useWrapping = false)
-    @XmlElement(name = "Civilite", namespace = "http://www.index-education.com/rapprochementssoV2.0", required = true)
+    @JacksonXmlProperty(localName = "Civilite", namespace = "http://www.index-education.com/rapprochementssoV2.0")
     protected List<Civilite> civilites = new ArrayList<>();
 
 }

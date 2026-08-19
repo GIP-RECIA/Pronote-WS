@@ -17,12 +17,11 @@ package fr.recia.pronote.ws.model.rapprochementsso;
 
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlSchemaType;
 import jakarta.xml.bind.annotation.XmlType;
 import javax.xml.datatype.XMLGregorianCalendar;
 
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import tools.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -62,35 +61,30 @@ import lombok.NoArgsConstructor;
 @XmlType(name = "")
 public class Professeur {
 
-    @JacksonXmlProperty(localName = "Ident")
-    @XmlAttribute(name = "Ident", required = true)
+    @JacksonXmlProperty(localName = "Ident", isAttribute = true)
     protected long ident;
-    @JacksonXmlProperty(localName = "Nom")
-    @XmlAttribute(name = "Nom", required = true)
+    @JacksonXmlProperty(localName = "Nom", isAttribute = true)
     protected String nom;
-    @JacksonXmlProperty(localName = "Prenom")
-    @XmlAttribute(name = "Prenom", required = true)
+    @JacksonXmlProperty(localName = "Prenom", isAttribute = true)
     protected String prenom;
-    @JacksonXmlProperty(localName = "DateNaissance")
-    @XmlAttribute(name = "DateNaissance")
+    @JacksonXmlProperty(localName = "DateNaissance", isAttribute = true)
     @XmlSchemaType(name = "date")
     protected XMLGregorianCalendar dateNaissance;
-    @JacksonXmlProperty(localName = "ID_Partenaire")
-    @XmlAttribute(name = "ID_Partenaire", required = true)
+    @JacksonXmlProperty(localName = "ID_Partenaire", isAttribute = true)
     protected String idPartenaire;
-    @XmlAttribute(name = "Adresse1")
+    @JacksonXmlProperty(localName = "Adresse1", isAttribute = true)
     protected String adresse1;
-    @XmlAttribute(name = "Adresse2")
+    @JacksonXmlProperty(localName = "Adresse2", isAttribute = true)
     protected String adresse2;
-    @XmlAttribute(name = "Adresse3")
+    @JacksonXmlProperty(localName = "Adresse3", isAttribute = true)
     protected String adresse3;
-    @XmlAttribute(name = "Adresse4")
+    @JacksonXmlProperty(localName = "Adresse4", isAttribute = true)
     protected String adresse4;
-    @XmlAttribute(name = "CodePostal")
+    @JacksonXmlProperty(localName = "CodePostal", isAttribute = true)
     protected String codePostal;
-    @XmlAttribute(name = "Ville")
+    @JacksonXmlProperty(localName = "Ville", isAttribute = true)
     protected String ville;
-    @XmlAttribute(name = "Pays")
+    @JacksonXmlProperty(localName = "Pays", isAttribute = true)
     protected String pays;
 
 }
