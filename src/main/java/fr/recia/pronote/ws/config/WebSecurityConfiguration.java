@@ -52,6 +52,7 @@ public class WebSecurityConfiguration {
 		http
 				.csrf(AbstractHttpConfigurer::disable)
 				.authorizeHttpRequests(auth -> auth
+						.requestMatchers("/health-check").permitAll()
 						.requestMatchers("/**")
 						.access(new WebExpressionAuthorizationManager(hasIpAddress.toString()))				)
 				.httpBasic(AbstractHttpConfigurer::disable);
